@@ -32,7 +32,7 @@ const testAndErrorData = {
   weather: [
     {
       main: 'Cloudy',
-      icon: '01d.png',
+      icon: '01d',
     },
   ],
 } as WeatherData;
