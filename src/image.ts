@@ -1,10 +1,11 @@
+import { ICLOUD_FOLDER } from './config';
 import { log } from './log';
 
 type FileType = 'background' | 'icon'
 
 export async function getImage(file: string, fileType: FileType, destinationFolder: string = 'weather'): Promise<Image> {
   const iCloud = FileManager.iCloud();
-  const destinationFolderPath = `/var/mobile/Library/Mobile Documents/iCloud~dk~simonbs~Scriptable/Documents/${destinationFolder}/${fileType}`;
+  const destinationFolderPath = `${ICLOUD_FOLDER}/${destinationFolder}/${fileType}`;
   const filePath = `${destinationFolderPath}/${file}`;
 
   if (!iCloud.fileExists(destinationFolderPath)) {

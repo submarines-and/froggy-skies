@@ -1,7 +1,9 @@
+import { get, set } from './cache';
 import { API_KEY } from './config';
 import { log } from './log';
 
-export interface WeatherData {
+interface WeatherData {
+  id: string;
   name: string;
   main: {
     temp: number;
@@ -11,36 +13,44 @@ export interface WeatherData {
     main: string;
     icon: string;
   }[];
+
+  // error
+  cod?: number;
 }
 
-export interface WeatherLocation {
+interface Location {
   id: string;
   name: string;
 }
 
-export async function getWeatherData(locationId?: string): Promise<WeatherData> {
+const testAndErrorData = {
+  name: 'Malmö',
+  main: {
+    temp: 10,
+    feels_like: 10,
+  },
+  weather: [
+    {
+      main: 'Cloudy',
+      icon: '01d.png',
+    },
+  ],
+} as WeatherData;
+
+export async function getWeatherData(): Promise<WeatherData> {
+  const cacheKey = 'weather';
 
   if (!API_KEY) {
     log('API key missing, will return test data');
-
-    return {
-      name: 'Malmö',
-      main: {
-        temp: 10,
-        feels_like: 10,
-      },
-      weather: [
-        {
-          main: 'Cloudy',
-          icon: '01d.png',
-        },
-      ],
-    } as WeatherData;
+    return testAndErrorData;
   }
 
   let url = '';
-  if (locationId) {
-    url = `http://api.openweathermap.org/data/2.5/weather?id=${locationId}&APPID=${API_KEY}&units=metric`;
+
+  // check cache
+  const cached = await get<Location>(cacheKey);
+  if (cached?.id) {
+    url = `http://api.openweathermap.org/data/2.5/weather?id=${cached.id}&APPID=${API_KEY}&units=metric`;
   }
   else {
     // fall back to current location
@@ -50,18 +60,26 @@ export async function getWeatherData(locationId?: string): Promise<WeatherData> 
 
   log('Getting weather', url);
   const request = new Request(url);
-  return request.loadJSON().catch(ex => {
+
+  return request.loadJSON().then(data => {
+
+    if (data.cod === 401) {
+      log('Error in response', data);
+      return testAndErrorData;
+    }
+
+    set(cacheKey, data);
+    return data;
+  }).catch(ex => {
     log('Error when getting weather', ex);
-    return {
-      name: 'Error',
-      main: {
-        temp: 0,
-        feels_like: 0,
-      },
-      weather: [
-        { main: 'Error' },
-      ],
-    } as WeatherData;
+
+    // fall back to cached
+    if (cached) {
+      return cached;
+    }
+
+    // error object
+    return testAndErrorData;
   });
 }
 
