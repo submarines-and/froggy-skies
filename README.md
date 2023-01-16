@@ -1,5 +1,5 @@
 # Froggy Skies
-Widget for `Scriptable` with the Google weather frog. Look how happy he is.
+Weather widget for [Scriptable](https://scriptable.app) with the Google weather frog. Images are downloaded during sync from this repo and will be stored in your icloud account under `/scriptable/weather`. A primitive text cache will also be stored here.
 
 ## Installation and config
 * Register api key at https://openweathermap.org
@@ -14,5 +14,7 @@ Widget for `Scriptable` with the Google weather frog. Look how happy he is.
 * Add widget to homescreen.
 * Select your script as target.
 
+
+Look how happy he is :)
 
 ![Widget](./preview.jpeg)
