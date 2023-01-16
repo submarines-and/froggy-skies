@@ -15,16 +15,15 @@ import { getWeatherData } from './weather';
   widget.addSpacer(0);
 
   // icon
-  const img = await getImage(imageFilename, 'icon');
-  const widgetimg = widget.addImage(img);
-  widgetimg.imageSize = new Size(75, 75);
-  widgetimg.rightAlignImage();
+  const widgetImage = widget.addImage(await getImage(imageFilename, 'icon'));
+  widgetImage.imageSize = new Size(75, 75);
+  widgetImage.rightAlignImage();
 
   const textColor = new Color('#ffffff');
   const degreeSymbol = '\u2103';
 
   // date
-  const dateText = widget.addText(`${format(new Date(), 'mediumDate')}, ${weatherDisplayName}`);
+  const dateText = widget.addText(`${format(new Date(), 'cccc d')}, ${weatherDisplayName}`);
   dateText.textColor = textColor;
   dateText.font = Font.regularSystemFont(15);
 
