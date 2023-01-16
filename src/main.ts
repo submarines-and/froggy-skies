@@ -1,8 +1,10 @@
 import { format } from 'date-fns';
 import { getImage } from './image';
+import { log } from './log';
 import { getWeatherData } from './weather';
 
 (async () => {
+  log('Creating widget');
   const widget = new ListWidget();
 
   const weatherData = await getWeatherData();
@@ -12,10 +14,9 @@ import { getWeatherData } from './weather';
 
   // background
   widget.backgroundImage = await getImage(filename, 'background');
-
   widget.addSpacer(0);
 
-  // iicon
+  // icon
   const img = await getImage(filename, 'icon');
   const widgetimg = widget.addImage(img);
   widgetimg.imageSize = new Size(75, 75);
@@ -47,5 +48,6 @@ import { getWeatherData } from './weather';
 
   widget.addSpacer();
 
+  log('Applying');
   Script.setWidget(widget);
-})();
+})().catch(ex => log('Root error', ex));
