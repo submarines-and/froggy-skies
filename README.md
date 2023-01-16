@@ -3,7 +3,7 @@ Widget for `Scriptable` with the Google weather frog. Look how happy he is.
 
 ## Installation and config
 * Register api key at https://openweathermap.org
-* Fill out variables in `src/config.ts`.
+* Fill out key in `src/config.ts`.
 
 * Install dependencies with `yarn`.
 * Run `yarn build`.

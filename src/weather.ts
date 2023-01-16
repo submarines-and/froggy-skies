@@ -1,4 +1,4 @@
-import { API_KEY, CITY_ID } from './config';
+import { API_KEY } from './config';
 import { log } from './log';
 
 export interface WeatherData {
@@ -13,10 +13,15 @@ export interface WeatherData {
   }[];
 }
 
-export async function getWeatherData(): Promise<WeatherData> {
+export interface WeatherLocation {
+  id: string;
+  name: string;
+}
 
-  if (!CITY_ID || !API_KEY) {
-    log('Keys missing, will return test data');
+export async function getWeatherData(locationId?: string): Promise<WeatherData> {
+
+  if (!API_KEY) {
+    log('API key missing, will return test data');
 
     return {
       name: 'Malmö',
@@ -33,7 +38,15 @@ export async function getWeatherData(): Promise<WeatherData> {
     } as WeatherData;
   }
 
-  const url = `http://api.openweathermap.org/data/2.5/weather?id=${CITY_ID}&APPID=${API_KEY}&units=metric`;
+  let url = '';
+  if (locationId) {
+    url = `http://api.openweathermap.org/data/2.5/weather?id=${locationId}&APPID=${API_KEY}&units=metric`;
+  }
+  else {
+    // fall back to current location
+    const currentLocation = await Location.current();
+    url = `http://api.openweathermap.org/data/2.5/weather?lat=${currentLocation.latitude}&lon=${currentLocation.longitude}&appid=${API_KEY}&units=metric`;
+  }
 
   log('Getting weather', url);
   const request = new Request(url);
@@ -51,3 +64,4 @@ export async function getWeatherData(): Promise<WeatherData> {
     } as WeatherData;
   });
 }
+
