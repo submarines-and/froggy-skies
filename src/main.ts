@@ -4,20 +4,18 @@ import { log } from './log';
 import { getWeatherData } from './weather';
 
 (async () => {
+  const weatherData = await getWeatherData();
+  const imageFilename = weatherData.weather[0].icon;
+  const weatherDisplayName = weatherData.weather[0].main;
+
+  // create widget + set background
   log('Creating widget');
   const widget = new ListWidget();
-
-  const weatherData = await getWeatherData();
-  const filename = weatherData.weather[0].icon;
-  const weathername = weatherData.weather[0].main;
-  const curTempObj = weatherData.main;
-
-  // background
-  widget.backgroundImage = await getImage(filename, 'background');
+  widget.backgroundImage = await getImage(imageFilename, 'background');
   widget.addSpacer(0);
 
   // icon
-  const img = await getImage(filename, 'icon');
+  const img = await getImage(imageFilename, 'icon');
   const widgetimg = widget.addImage(img);
   widgetimg.imageSize = new Size(75, 75);
   widgetimg.rightAlignImage();
@@ -26,17 +24,17 @@ import { getWeatherData } from './weather';
   const degreeSymbol = '\u2103';
 
   // date
-  const dateText = widget.addText(`${format(new Date(), 'mediumDate')}, ${weathername}`);
+  const dateText = widget.addText(`${format(new Date(), 'mediumDate')}, ${weatherDisplayName}`);
   dateText.textColor = textColor;
   dateText.font = Font.regularSystemFont(15);
 
   // temperature
-  const tempText = widget.addText(`${Math.round(curTempObj.temp)}${degreeSymbol}`);
+  const tempText = widget.addText(`${Math.round(weatherData.main.temp)}${degreeSymbol}`);
   tempText.textColor = textColor;
   tempText.font = Font.boldSystemFont(35);
 
   // feels like
-  const feel = `Feels like ${Math.round(curTempObj.feels_like)}${degreeSymbol}`;
+  const feel = `Feels like ${Math.round(weatherData.main.feels_like)}${degreeSymbol}`;
   const hltempText = widget.addText(feel);
   hltempText.textColor = textColor;
   hltempText.font = Font.regularSystemFont(15);
