@@ -53,7 +53,7 @@ export async function getWeatherData(): Promise<WeatherData> {
     url = `http://api.openweathermap.org/data/2.5/weather?id=${cached.id}&APPID=${API_KEY}&units=metric`;
   }
   else {
-    // fall back to current location
+    // fall back to current location - will be used first time
     const currentLocation = await Location.current();
     url = `http://api.openweathermap.org/data/2.5/weather?lat=${currentLocation.latitude}&lon=${currentLocation.longitude}&appid=${API_KEY}&units=metric`;
   }

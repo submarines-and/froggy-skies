@@ -28,20 +28,19 @@ import { getWeatherData } from './weather';
   dateText.font = Font.regularSystemFont(15);
 
   // temperature
-  const tempText = widget.addText(`${Math.round(weatherData.main.temp)}${degreeSymbol}`);
-  tempText.textColor = textColor;
-  tempText.font = Font.boldSystemFont(35);
+  const temperatureText = widget.addText(`${Math.round(weatherData.main.temp)}${degreeSymbol}`);
+  temperatureText.textColor = textColor;
+  temperatureText.font = Font.boldSystemFont(35);
 
   // feels like
-  const feel = `Feels like ${Math.round(weatherData.main.feels_like)}${degreeSymbol}`;
-  const hltempText = widget.addText(feel);
-  hltempText.textColor = textColor;
-  hltempText.font = Font.regularSystemFont(15);
+  const feelsLikeText = widget.addText(`Feels like ${Math.round(weatherData.main.feels_like)}${degreeSymbol}`);
+  feelsLikeText.textColor = textColor;
+  feelsLikeText.font = Font.regularSystemFont(15);
 
   // city name
-  const citynameText = widget.addText(weatherData.name);
-  citynameText.textColor = textColor;
-  citynameText.font = Font.regularSystemFont(10);
+  const cityText = widget.addText(weatherData.name);
+  cityText.textColor = textColor;
+  cityText.font = Font.regularSystemFont(10);
 
   widget.addSpacer();
 
