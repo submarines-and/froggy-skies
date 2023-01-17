@@ -91,6 +91,7 @@ export async function getImage(weatherType: WeatherType, fileType: FileType, des
   const filePath = `${destinationFolderPath}/${filename}`;
 
   if (!iCloud.fileExists(filePath)) {
+    log('Image does not exist', filename);
 
     // create folder if missing
     if (!iCloud.fileExists(destinationFolderPath)) {
@@ -120,6 +121,5 @@ export async function getImage(weatherType: WeatherType, fileType: FileType, des
     }
   }
 
-  log('Loading local image', filePath);
   return Image.fromFile(filePath);
 }
