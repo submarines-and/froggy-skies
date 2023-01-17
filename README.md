@@ -22,4 +22,4 @@ Weather widget for [Scriptable](https://scriptable.app) with the Google weather 
 
 Look how happy he is :)
 
-![Widget](./preview.jpeg)
+![Widget](./preview2.jpeg)
