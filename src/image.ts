@@ -3,7 +3,7 @@ import { log } from './log';
 
 type FileType = 'background' | 'icon'
 
-export async function getImage(file: string, fileType: FileType, destinationFolder: string = 'weather'): Promise<Image> {
+export async function getImage(weatherType: WeatherType, fileType: FileType, destinationFolder: string = 'weather'): Promise<Image> {
   const iCloud = FileManager.iCloud();
   const destinationFolderPath = `${ICLOUD_FOLDER}/${destinationFolder}/${fileType}`;
   const filePath = `${destinationFolderPath}/${file}.png`;
