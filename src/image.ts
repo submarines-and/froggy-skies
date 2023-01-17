@@ -91,7 +91,7 @@ export async function getImage(weatherType: WeatherType, fileType: FileType, des
   const filePath = `${destinationFolderPath}/${filename}`;
 
   if (!iCloud.fileExists(filePath)) {
-    log(`Image does not exist: ${filename}`);
+    log(`Image not found in icloud: ${filename}`);
 
     // create folder if missing
     if (!iCloud.fileExists(destinationFolderPath)) {
@@ -102,7 +102,7 @@ export async function getImage(weatherType: WeatherType, fileType: FileType, des
     // Images are downloaded from repo first time
     // Once they are downloaded, they will be read from personal icloud.
     const url = `https://github.com/submarines-and/froggy-skies/raw/master/${fileType}/${filename}`;
-    log(`Downloading image: ${url}`);
+    log(`Downloading image: ${filename}`);
 
     const request = new Request(url);
     const image = await request.loadImage().catch(ex => {
@@ -112,7 +112,7 @@ export async function getImage(weatherType: WeatherType, fileType: FileType, des
     });
 
     if (image) {
-      log(`Saving image to disk: ${filePath}`);
+      log(`Saving image to disk: ${filename}`);
       iCloud.writeImage(filePath, image);
     }
 
@@ -122,5 +122,5 @@ export async function getImage(weatherType: WeatherType, fileType: FileType, des
     }
   }
 
-  return Image.fromFile(filePath);
+  return iCloud.readImage(filePath);
 }
