@@ -1,7 +1,6 @@
 {
   "name": "froggy-skies",
   "version": "0.0.0",
-  "main": "index.js",
   "repository": "https://github.com/submarines-and/froggy-skies",
   "author": "submarines",
   "license": "MIT",
@@ -18,10 +17,10 @@
     "esbuild": "^0.17.0",
     "eslint": "^8.32.0",
     "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.4",
     "typescript": "^4.9.4"
   },
   "dependencies": {
-    "date-fns": "^2.29.3",
-    "eslint-plugin-import": "^2.27.4"
+    "date-fns": "^2.29.3"
   }
 }
