@@ -9,7 +9,6 @@ import { getWeatherData } from './weather';
   const weatherDisplayName = weatherData.weather[0].main;
 
   // create widget + set background
-  log('Creating widget');
   const widget = new ListWidget();
   widget.backgroundImage = await getImage(`${imageFilename}.png`, 'background');
   widget.addSpacer(0);
