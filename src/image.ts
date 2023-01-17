@@ -1,5 +1,4 @@
 import { ICLOUD_FOLDER } from './constants';
-import { log } from './log';
 import { WeatherType } from './models';
 
 type FileType = 'background' | 'icon'
@@ -72,7 +71,8 @@ function pickBestImage(weatherType: WeatherType): string {
 
     // error or missing type
     default:
-      log('Bad type provided', weatherType);
+      log('Bad type provided!');
+      log(weatherType);
       prefix = 'error';
       count = 2;
       break;
@@ -91,27 +91,28 @@ export async function getImage(weatherType: WeatherType, fileType: FileType, des
   const filePath = `${destinationFolderPath}/${filename}`;
 
   if (!iCloud.fileExists(filePath)) {
-    log('Image does not exist', filename);
+    log(`Image does not exist: ${filename}`);
 
     // create folder if missing
     if (!iCloud.fileExists(destinationFolderPath)) {
-      log('Creating folder', destinationFolderPath);
+      log(`Creating folder: ${destinationFolderPath}`);
       iCloud.createDirectory(destinationFolderPath, true);
     }
 
     // Images are downloaded from repo first time
     // Once they are downloaded, they will be read from personal icloud.
     const url = `https://github.com/submarines-and/froggy-skies/raw/master/${fileType}/${filename}`;
-    log('Downloading image', url);
+    log(`Downloading image: ${url}`);
 
     const request = new Request(url);
     const image = await request.loadImage().catch(ex => {
-      log('Error when download image', ex);
+      log('Error when download image!');
+      log(ex);
       return null;
     });
 
     if (image) {
-      log('Saving image to disk', filePath);
+      log(`Saving image to disk: ${filePath}`);
       iCloud.writeImage(filePath, image);
     }
 
