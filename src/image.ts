@@ -78,7 +78,7 @@ function pickBestImage(weatherType: WeatherType): string {
       break;
   }
 
-  const index = Math.floor(Math.random() * count);
+  const index = Math.floor(Math.random() * (count - 1) + 1);
   return `${prefix}-${`${index}`.padStart(2, '0')}.jpg`;
 }
 
