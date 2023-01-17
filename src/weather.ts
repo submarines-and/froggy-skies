@@ -2,44 +2,14 @@ import { get, set } from './cache';
 import { API_KEY } from './constants';
 import { getCurrentLocation } from './location';
 import { log } from './log';
-
-interface WeatherData {
-  id: string;
-  name: string;
-  main: {
-    temp: number;
-    feels_like: number;
-  };
-  weather: {
-    main: string;
-    icon: string;
-  }[];
-
-  // error
-  cod?: number;
-}
-
-/** Test data in case things go wrong */
-const testData = {
-  name: 'Krabbelurien',
-  main: {
-    temp: 10,
-    feels_like: 15,
-  },
-  weather: [
-    {
-      main: 'Sunny',
-      icon: '01d',
-    },
-  ],
-} as WeatherData;
+import { TEST_DATA, WeatherData } from './models';
 
 export async function getWeatherData(): Promise<WeatherData> {
   const cacheKey = 'weather';
 
   if (!API_KEY) {
     log('API key missing, will return test data');
-    return testData;
+    return TEST_DATA;
   }
 
   // get weather based on current location
@@ -67,7 +37,7 @@ export async function getWeatherData(): Promise<WeatherData> {
       return cached;
     }
 
-    return testData;
+    return TEST_DATA;
   });
 }
 
