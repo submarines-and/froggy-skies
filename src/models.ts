@@ -1,4 +1,14 @@
+/**
+ * Weather "type", used to pick icon and background
+ * https://openweathermap.org/weather-conditions
+*/
+export interface WeatherType {
+  id: number;
+  main: string;
+  icon: string;
+}
 
+/** Weather data as returned by the api */
 export interface WeatherData {
 
   /** City name  */
@@ -10,15 +20,8 @@ export interface WeatherData {
     feels_like: number;
   };
 
-  /**
-   * Weather "type", used to pick icon and background
-   * https://openweathermap.org/weather-conditions
-  */
-  weather: {
-    id: number;
-    main: string;
-    icon: string;
-  }[];
+  /** Type of weather */
+  weather: WeatherType[];
 
   // Any error message
   cod?: number;

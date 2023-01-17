@@ -5,16 +5,14 @@ import { getWeatherData } from './weather';
 
 (async () => {
   const weatherData = await getWeatherData();
-  const imageFilename = weatherData.weather[0].icon;
-  const weatherDisplayName = weatherData.weather[0].main;
 
   // create widget + set background
   const widget = new ListWidget();
-  widget.backgroundImage = await getImage(imageFilename, 'background');
+  widget.backgroundImage = await getImage(weatherData.weather[0], 'background');
   widget.addSpacer(0);
 
   // icon
-  const widgetImage = widget.addImage(await getImage(imageFilename, 'icon'));
+  const widgetImage = widget.addImage(await getImage(weatherData.weather[0], 'icon'));
   widgetImage.imageSize = new Size(75, 75);
   widgetImage.rightAlignImage();
 
@@ -22,7 +20,7 @@ import { getWeatherData } from './weather';
   const degreeSymbol = '\u2103';
 
   // date
-  const dateText = widget.addText(`${format(new Date(), 'cccc d')}, ${weatherDisplayName}`);
+  const dateText = widget.addText(`${format(new Date(), 'cccc d')}, ${weatherData.weather[0].main}`);
   dateText.textColor = textColor;
   dateText.font = Font.regularSystemFont(15);
 
