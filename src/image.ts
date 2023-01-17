@@ -122,5 +122,6 @@ export async function getImage(weatherType: WeatherType, fileType: FileType, des
     }
   }
 
+  await iCloud.downloadFileFromiCloud(filePath);
   return iCloud.readImage(filePath);
 }
