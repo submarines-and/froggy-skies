@@ -39,6 +39,11 @@ import { getWeatherData } from './weather';
   cityText.textColor = textColor;
   cityText.font = Font.regularSystemFont(10);
 
+  // last updated
+  const lastUpdatedText = widget.addText(`Updated ${format(new Date(), 'HH:mm')}`);
+  lastUpdatedText.textColor = textColor;
+  lastUpdatedText.font = Font.regularSystemFont(10);
+
   widget.addSpacer();
 
   log('Applying');
