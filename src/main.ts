@@ -14,11 +14,19 @@ import { getWeatherData } from './weather';
   // create widget + set background
   log('Creating widget...');
   const widget = new ListWidget();
-  widget.backgroundImage = backgroundImage;
   widget.addSpacer(0);
 
-  const textColor = new Color('#ffffff');
+  /** Text color will change to black if background fails to set */
+  let textColor = new Color('#ffffff');
   const degreeSymbol = '\u2103';
+
+  if (backgroundImage) {
+    widget.backgroundImage = backgroundImage;
+  }
+  else {
+    log('Background image missing, will not set!');
+    textColor = new Color('#000000');
+  }
 
   // icon
   log('1 - Icon');
