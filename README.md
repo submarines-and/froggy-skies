@@ -1,6 +1,8 @@
 # Froggy Skies
 Weather widget for [Scriptable](https://scriptable.app) with the Google weather frog. Images are downloaded during sync from this repo and will be stored in your icloud account under `/scriptable/weather`. A primitive text cache will also be stored here.
 
+On first run, it will request your location. This will then be saved in the cache as `location.json`. You can delete or change this file to update your location.
+
 ## Installation and config
 
 ### Api key
