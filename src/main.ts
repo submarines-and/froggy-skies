@@ -17,7 +17,7 @@ import { getWeatherData } from './weather';
 
   /** Text color will change to black if background fails to set */
   let textColor = new Color('#ffffff');
-  const degreeSymbol = '\u2103';
+  const degreeSymbol = '\u00B0';
 
   if (backgroundImage) {
     widget.backgroundImage = backgroundImage;
