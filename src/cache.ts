@@ -1,10 +1,9 @@
-import { ICLOUD_FOLDER } from './constants';
 
 export function get<T>(key: string): T {
   try {
-    const filePath = `${ICLOUD_FOLDER}/cache/${key}.json`;
-
     const iCloud = FileManager.iCloud();
+    const filePath = iCloud.joinPath(iCloud.documentsDirectory(), `cache/${key}.json`);
+
     if (!iCloud.fileExists(filePath)) {
       log(`Item not found in cache: ${filePath}`);
       return null;
@@ -24,8 +23,8 @@ export function get<T>(key: string): T {
 export function set(key: string, value: any): void {
   try {
     const iCloud = FileManager.iCloud();
-    const cacheFolder = `${ICLOUD_FOLDER}/cache`;
-    const filePath = `${cacheFolder}/${key}.json`;
+    const cacheFolder = iCloud.joinPath(iCloud.documentsDirectory(), 'cache');
+    const filePath = iCloud.joinPath(cacheFolder, `${key}.json`);
 
     // create cache folder if missing
     if (!iCloud.fileExists(cacheFolder)) {
