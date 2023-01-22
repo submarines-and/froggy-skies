@@ -42,3 +42,10 @@ export const TEST_DATA: WeatherData = {
     },
   ],
 };
+
+/**  Used to cache image selection to prevent too fast reloads */
+export interface ImageSelection {
+  id: string;
+  image: string;
+  date: string;
+}
