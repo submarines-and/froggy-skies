@@ -31,6 +31,7 @@ export function saveImageSelection(id: string, image: string): void {
 
     if (id === i.id) {
       exists = true;
+      return;
     }
 
     // image still valid
