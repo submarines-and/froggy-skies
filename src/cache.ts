@@ -32,6 +32,10 @@ export function set(key: string, value: any): void {
       iCloud.createDirectory(cacheFolder, true);
     }
 
+    if (iCloud.fileExists(filePath)) {
+      iCloud.remove(filePath);
+    }
+
     iCloud.writeString(filePath, JSON.stringify(value));
   }
   catch (ex) {
