@@ -7,8 +7,8 @@ const IMAGE_SELECTION_CACHE_KEY = 'images';
 const IMAGE_SELECTION_EXPIRATION_HOURS = 4;
 
 /** Check for cached selection. Images are valid for a few hours before switching if the weather is the same. */
-export function getImageSelection(key: string): string {
-  const images = get<ImageSelection[]>(IMAGE_SELECTION_CACHE_KEY) || [];
+export async function getImageSelection(key: string): Promise<string> {
+  const images = await get<ImageSelection[]>(IMAGE_SELECTION_CACHE_KEY) || [];
 
   // check if cached and valid
   const target = images.find(i => i.id === key);
@@ -19,8 +19,8 @@ export function getImageSelection(key: string): string {
   return null;
 }
 
-export function saveImageSelection(id: string, image: string): void {
-  const images = get<ImageSelection[]>(IMAGE_SELECTION_CACHE_KEY) || [];
+export async function saveImageSelection(id: string, image: string): Promise<void> {
+  const images = await get<ImageSelection[]>(IMAGE_SELECTION_CACHE_KEY) || [];
 
   /** If obj already exists in list in list */
   let exists = false;

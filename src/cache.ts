@@ -1,5 +1,5 @@
 
-export function get<T>(key: string): T {
+export async function get<T>(key: string): Promise<T> {
   try {
     const iCloud = FileManager.iCloud();
     const filePath = iCloud.joinPath(iCloud.documentsDirectory(), `cache/${key}.json`);
@@ -9,6 +9,7 @@ export function get<T>(key: string): T {
       return null;
     }
 
+    await iCloud.downloadFileFromiCloud(filePath);
     const raw = iCloud.readString(filePath);
     return JSON.parse(raw);
   }
