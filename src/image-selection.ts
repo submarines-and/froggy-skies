@@ -4,7 +4,7 @@ import { get, set } from './cache';
 import { ImageSelection } from './models';
 
 const IMAGE_SELECTION_CACHE_KEY = 'images';
-const IMAGE_SELECTION_EXPIRATION_HOURS = 4;
+const IMAGE_SELECTION_EXPIRATION_HOURS = 8;
 
 /** Check for cached selection. Images are valid for a few hours before switching if the weather is the same. */
 export async function getImageSelection(key: string): Promise<string> {
