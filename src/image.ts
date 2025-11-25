@@ -4,7 +4,7 @@ type FileType = 'background' | 'icon'
 
 export async function getImage(file: string, fileType: FileType, destinationFolder: string = 'weather'): Promise<Image> {
   const iCloud = FileManager.iCloud();
-  const destinationFolderPath = `/var/mobile/Library/Mobile Documents/iCloud~dk~simonbs~Scriptable/Documents/${destinationFolder}`;
+  const destinationFolderPath = `/var/mobile/Library/Mobile Documents/iCloud~dk~simonbs~Scriptable/Documents/${destinationFolder}/${fileType}`;
   const filePath = `${destinationFolderPath}/${file}`;
 
   if (!iCloud.fileExists(destinationFolderPath)) {
@@ -23,5 +23,6 @@ export async function getImage(file: string, fileType: FileType, destinationFold
     iCloud.writeImage(filePath, image);
   }
 
+  log('Loading local image', filePath);
   return Image.fromFile(filePath);
 }
