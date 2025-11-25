@@ -4,7 +4,6 @@ import { getWeatherData } from './weather';
 
 (async () => {
   log('Getting weather...');
-
   const weatherData = await getWeatherData();
 
   log('Loading images...');
