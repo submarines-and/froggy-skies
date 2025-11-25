@@ -79,7 +79,7 @@ function pickBestImage(weatherType: WeatherType): string {
   }
 
   const index = Math.floor(Math.random() * count);
-  return `${prefix}-${`${count}`.padStart(2, '0')}.jpg`;
+  return `${prefix}-${`${index}`.padStart(2, '0')}.jpg`;
 }
 
 /** Download image from repository (or local icloud) */
