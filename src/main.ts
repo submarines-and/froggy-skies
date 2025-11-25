@@ -23,8 +23,8 @@ import { getWeatherData } from './weather';
     widget.backgroundImage = backgroundImage;
   }
   else {
-    log('Background image missing, will not set!');
     textColor = new Color('#000000');
+    log('Background image missing, will not set!');
   }
 
   // icon
