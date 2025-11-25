@@ -14,6 +14,8 @@ export async function getImage(file: string, fileType: FileType, destinationFold
       iCloud.createDirectory(destinationFolderPath, true);
     }
 
+    // Images are downloaded from my repo first time
+    // Once they are downloaded, they will be read from your icloud.
     const url = `https://github.com/submarines-and/froggy-skies/raw/master/${fileType}/${file}`;
     log('Downloading image', url);
 
