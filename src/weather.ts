@@ -19,35 +19,27 @@ interface WeatherData {
   cod?: number;
 }
 
-async function getCachedOrTestData() {
-  const cacheKey = 'weather';
-
-  const cached = await get<WeatherData>(cacheKey);
-  if (cached) {
-    return cached;
-  }
-
-  return {
-    name: 'Malmö',
-    main: {
-      temp: 10,
-      feels_like: 10,
+/** Test data in case things go wrong */
+const testData = {
+  name: 'Krabbelurien',
+  main: {
+    temp: 10,
+    feels_like: 15,
+  },
+  weather: [
+    {
+      main: 'Sunny',
+      icon: '01d',
     },
-    weather: [
-      {
-        main: 'Cloudy',
-        icon: '01d',
-      },
-    ],
-  } as WeatherData;
-}
+  ],
+} as WeatherData;
 
 export async function getWeatherData(): Promise<WeatherData> {
   const cacheKey = 'weather';
 
   if (!API_KEY) {
     log('API key missing, will return test data');
-    return getCachedOrTestData();
+    return testData;
   }
 
   // get weather based on current location
@@ -68,7 +60,14 @@ export async function getWeatherData(): Promise<WeatherData> {
     return data;
   }).catch(ex => {
     log('Error when getting weather', ex);
-    return getCachedOrTestData();
+
+    // try cached data
+    const cached = get<WeatherData>(cacheKey);
+    if (cached) {
+      return cached;
+    }
+
+    return testData;
   });
 }
 
