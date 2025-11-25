@@ -1,7 +1,6 @@
 import { get, set } from './cache';
 import { API_KEY } from './constants';
 import { getCurrentLocation } from './location';
-import { log } from './log';
 import { TEST_DATA, WeatherData } from './models';
 
 export async function getWeatherData(): Promise<WeatherData> {
@@ -16,7 +15,6 @@ export async function getWeatherData(): Promise<WeatherData> {
   const currentLocation = await getCurrentLocation();
   const url = `http://api.openweathermap.org/data/2.5/weather?lat=${currentLocation.latitude}&lon=${currentLocation.longitude}&appid=${API_KEY}&units=metric`;
 
-  log('Getting weather', url);
   const request = new Request(url);
 
   return request.loadJSON().then(data => {
@@ -29,7 +27,8 @@ export async function getWeatherData(): Promise<WeatherData> {
     set(cacheKey, data);
     return data;
   }).catch(ex => {
-    log('Error when getting weather', ex);
+    log('Error when getting weather!');
+    log(ex);
 
     // try cached data
     const cached = get<WeatherData>(cacheKey);

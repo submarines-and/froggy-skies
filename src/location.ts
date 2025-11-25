@@ -1,5 +1,4 @@
 import { get, set } from './cache';
-import { log } from './log';
 
 export async function getCurrentLocation(): Promise<Location.CurrentLocation> {
   const cacheKey = 'location';
@@ -8,7 +7,7 @@ export async function getCurrentLocation(): Promise<Location.CurrentLocation> {
     return cached;
   }
 
-  log('Getting current location');
+  log('Getting current location...');
   Location.setAccuracyToBest();
   const currentLocation = await Location.current();
   set(cacheKey, currentLocation);

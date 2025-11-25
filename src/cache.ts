@@ -1,5 +1,4 @@
 import { ICLOUD_FOLDER } from './constants';
-import { log } from './log';
 
 export function get<T>(key: string): T {
   try {
@@ -7,7 +6,7 @@ export function get<T>(key: string): T {
 
     const iCloud = FileManager.iCloud();
     if (!iCloud.fileExists(filePath)) {
-      log('Item not found in cache', filePath);
+      log(`Item not found in cache: ${filePath}`);
       return null;
     }
 
@@ -15,7 +14,9 @@ export function get<T>(key: string): T {
     return JSON.parse(raw);
   }
   catch (ex) {
-    log('Cache error', 'GET', ex, key);
+    log('Cache GET Error');
+    log(key);
+    log(ex);
     return null;
   }
 }
@@ -28,13 +29,15 @@ export function set(key: string, value: any): void {
 
     // create cache folder if missing
     if (!iCloud.fileExists(cacheFolder)) {
-      log('Creating cache folder', cacheFolder);
+      log(`Creating cache folder: ${cacheFolder}`);
       iCloud.createDirectory(cacheFolder, true);
     }
 
     iCloud.writeString(filePath, JSON.stringify(value));
   }
   catch (ex) {
-    log('Cache error', 'SET', ex, key);
+    log('Cache SET Error');
+    log(key);
+    log(ex);
   }
 }
