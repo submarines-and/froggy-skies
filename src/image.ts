@@ -1,9 +1,15 @@
+import { getImageSelection, saveImageSelection } from './image-selection';
 import { WeatherType } from './models';
 
 type FileType = 'background' | 'icon'
 
 /** Pick best image for the provided weather type */
 function pickBestImage(weatherType: WeatherType): string {
+  const cacheKey = `${weatherType.main}-${weatherType.icon}`;
+  const cached = getImageSelection(cacheKey);
+  if (cached) {
+    return cached;
+  }
 
   let prefix = '';
   let count = 1;
@@ -77,8 +83,13 @@ function pickBestImage(weatherType: WeatherType): string {
       break;
   }
 
+  // randomize image
   const index = Math.floor(Math.random() * (count - 1) + 1);
-  return `${prefix}-${`${index}`.padStart(2, '0')}.jpg`;
+  const image = `${prefix}-${`${index}`.padStart(2, '0')}.jpg`;
+
+  // cache and return
+  saveImageSelection(cacheKey, image);
+  return image;
 }
 
 /** Download image from repository (or local icloud) */
