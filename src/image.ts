@@ -2,25 +2,26 @@ import { log } from './log';
 
 type FileType = 'background' | 'icon'
 
-export async function getImage(filename: string, fileType: FileType, destinationFolderPath: string = '/weather'): Promise<Image> {
-  const fm = FileManager.iCloud();
-  const fullPath = `${destinationFolderPath}/${filename}`;
+export async function getImage(file: string, fileType: FileType, destinationFolder: string = 'weather'): Promise<Image> {
+  const iCloud = FileManager.iCloud();
+  const destinationFolderPath = `/var/mobile/Library/Mobile Documents/iCloud~dk~simonbs~Scriptable/Documents/${destinationFolder}`;
+  const filePath = `${destinationFolderPath}/${file}`;
 
-  if (!fm.fileExists(fullPath)) {
-    if (!fm.fileExists(destinationFolderPath)) {
+  if (!iCloud.fileExists(destinationFolderPath)) {
+    if (!iCloud.fileExists(destinationFolderPath)) {
       log('Creating folder', destinationFolderPath);
-      fm.createDirectory(destinationFolderPath);
+      iCloud.createDirectory(destinationFolderPath, true);
     }
 
-    const url = `https://github.com/submarines-and/froggy-skies/raw/master/${fileType}/${filename}`;
+    const url = `https://github.com/submarines-and/froggy-skies/raw/master/${fileType}/${file}`;
     log('Downloading image', url);
 
     const request = new Request(url);
     const image = await request.loadImage();
 
-    log('Saving image to disc', fullPath);
-    fm.writeImage(fullPath, image);
+    log('Saving image to disk', filePath);
+    iCloud.writeImage(filePath, image);
   }
 
-  return Image.fromFile(fullPath);
+  return Image.fromFile(filePath);
 }
