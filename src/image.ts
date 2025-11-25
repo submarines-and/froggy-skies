@@ -1,4 +1,4 @@
-import { ICLOUD_FOLDER } from './config';
+import { ICLOUD_FOLDER } from './constants';
 import { log } from './log';
 
 type FileType = 'background' | 'icon'

@@ -1,5 +1,5 @@
 import { get, set } from './cache';
-import { API_KEY } from './config';
+import { API_KEY } from './constants';
 import { log } from './log';
 
 interface WeatherData {
