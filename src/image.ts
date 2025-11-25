@@ -8,7 +8,9 @@ export async function getImage(file: string, fileType: FileType, destinationFold
   const destinationFolderPath = `${ICLOUD_FOLDER}/${destinationFolder}/${fileType}`;
   const filePath = `${destinationFolderPath}/${file}`;
 
-  if (!iCloud.fileExists(destinationFolderPath)) {
+  if (!iCloud.fileExists(filePath)) {
+
+    // create folder if missing
     if (!iCloud.fileExists(destinationFolderPath)) {
       log('Creating folder', destinationFolderPath);
       iCloud.createDirectory(destinationFolderPath, true);
