@@ -104,10 +104,20 @@ export async function getImage(weatherType: WeatherType, fileType: FileType, des
     log('Downloading image', url);
 
     const request = new Request(url);
-    const image = await request.loadImage();
+    const image = await request.loadImage().catch(ex => {
+      log('Error when download image', ex);
+      return null;
+    });
 
-    log('Saving image to disk', filePath);
-    iCloud.writeImage(filePath, image);
+    if (image) {
+      log('Saving image to disk', filePath);
+      iCloud.writeImage(filePath, image);
+    }
+
+    // check again after downloading
+    if (!iCloud.fileExists(filePath)) {
+      log('Image not found after supposedly downloading, check logs!');
+    }
   }
 
   log('Loading local image', filePath);
