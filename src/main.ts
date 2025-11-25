@@ -10,11 +10,11 @@ import { getWeatherData } from './weather';
 
   // create widget + set background
   const widget = new ListWidget();
-  widget.backgroundImage = await getImage(`${imageFilename}.png`, 'background');
+  widget.backgroundImage = await getImage(imageFilename, 'background');
   widget.addSpacer(0);
 
   // icon
-  const widgetImage = widget.addImage(await getImage(`${imageFilename}.png`, 'icon'));
+  const widgetImage = widget.addImage(await getImage(imageFilename, 'icon'));
   widgetImage.imageSize = new Size(75, 75);
   widgetImage.rightAlignImage();
 

@@ -6,7 +6,7 @@ type FileType = 'background' | 'icon'
 export async function getImage(file: string, fileType: FileType, destinationFolder: string = 'weather'): Promise<Image> {
   const iCloud = FileManager.iCloud();
   const destinationFolderPath = `${ICLOUD_FOLDER}/${destinationFolder}/${fileType}`;
-  const filePath = `${destinationFolderPath}/${file}`;
+  const filePath = `${destinationFolderPath}/${file}.png`;
 
   if (!iCloud.fileExists(filePath)) {
 
@@ -18,7 +18,7 @@ export async function getImage(file: string, fileType: FileType, destinationFold
 
     // Images are downloaded from my repo first time
     // Once they are downloaded, they will be read from your icloud.
-    const url = `https://github.com/submarines-and/froggy-skies/raw/master/${fileType}/${file}`;
+    const url = `https://github.com/submarines-and/froggy-skies/raw/master/${fileType}/${file}.png`;
     log('Downloading image', url);
 
     const request = new Request(url);
