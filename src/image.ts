@@ -1,4 +1,3 @@
-import { ICLOUD_FOLDER } from './constants';
 import { WeatherType } from './models';
 
 type FileType = 'background' | 'icon'
@@ -87,8 +86,8 @@ export async function getImage(weatherType: WeatherType, fileType: FileType, des
   const filename = fileType === 'icon' ? `${weatherType.icon}.png` : pickBestImage(weatherType);
 
   const iCloud = FileManager.iCloud();
-  const destinationFolderPath = `${ICLOUD_FOLDER}/${destinationFolder}/${fileType}`;
-  const filePath = `${destinationFolderPath}/${filename}`;
+  const destinationFolderPath = iCloud.joinPath(iCloud.documentsDirectory(), iCloud.joinPath(destinationFolder, fileType));
+  const filePath = iCloud.joinPath(destinationFolderPath, filename);
 
   if (!iCloud.fileExists(filePath)) {
     log(`Image not found in icloud: ${filename}`);
