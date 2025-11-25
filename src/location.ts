@@ -2,7 +2,7 @@ import { get, set } from './cache';
 
 export async function getCurrentLocation(): Promise<Location.CurrentLocation> {
   const cacheKey = 'location';
-  const cached = get<Location.CurrentLocation>(cacheKey);
+  const cached = await get<Location.CurrentLocation>(cacheKey);
   if (cached) {
     return cached;
   }

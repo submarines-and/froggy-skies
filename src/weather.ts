@@ -26,12 +26,12 @@ export async function getWeatherData(): Promise<WeatherData> {
 
     set(cacheKey, data);
     return data;
-  }).catch(ex => {
+  }).catch(async ex => {
     log('Error when getting weather!');
     log(ex);
 
     // try cached data
-    const cached = get<WeatherData>(cacheKey);
+    const cached = await get<WeatherData>(cacheKey);
     if (cached) {
       return cached;
     }

@@ -4,9 +4,9 @@ import { WeatherType } from './models';
 type FileType = 'background' | 'icon'
 
 /** Pick best image for the provided weather type */
-function pickBestImage(weatherType: WeatherType): string {
+async function pickBestImage(weatherType: WeatherType): Promise<string> {
   const cacheKey = `${weatherType.main}-${weatherType.icon}`;
-  const cached = getImageSelection(cacheKey);
+  const cached = await getImageSelection(cacheKey);
   if (cached) {
     return cached;
   }
@@ -94,7 +94,7 @@ function pickBestImage(weatherType: WeatherType): string {
 
 /** Download image from repository (or local icloud) */
 export async function getImage(weatherType: WeatherType, fileType: FileType, destinationFolder: string = 'weather'): Promise<Image> {
-  const filename = fileType === 'icon' ? `${weatherType.icon}.png` : pickBestImage(weatherType);
+  const filename = fileType === 'icon' ? `${weatherType.icon}.png` : await pickBestImage(weatherType);
 
   const iCloud = FileManager.iCloud();
   const destinationFolderPath = iCloud.joinPath(iCloud.documentsDirectory(), iCloud.joinPath(destinationFolder, fileType));
