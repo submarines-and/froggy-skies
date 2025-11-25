@@ -8,15 +8,17 @@ export async function getImage(filename: string, fileType: FileType, destination
 
   if (!fm.fileExists(fullPath)) {
     if (!fm.fileExists(destinationFolderPath)) {
-      log('Creating folder', filename);
+      log('Creating folder', destinationFolderPath);
       fm.createDirectory(destinationFolderPath);
     }
 
     const url = `https://github.com/submarines-and/froggy-skies/raw/master/${fileType}/${filename}`;
-
     log('Downloading image', url);
+
     const request = new Request(url);
     const image = await request.loadImage();
+
+    log('Saving image to disc', fullPath);
     fm.writeImage(fullPath, image);
   }
 
